@@ -1,0 +1,9 @@
+E:\HXY\VS2015Project\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\SimpleChess.exe.config
+E:\HXY\VS2015Project\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\SimpleChess.exe
+E:\HXY\VS2015Project\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\SimpleChess.pdb
+E:\HXY\VS2015Project\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\SimpleChess.csprojResolveAssemblyReference.cache
+E:\HXY\VS2015Project\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\SimpleChess.FrmChess.resources
+E:\HXY\VS2015Project\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\SimpleChess.Properties.Resources.resources
+E:\HXY\VS2015Project\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\SimpleChess.csproj.GenerateResource.Cache
+E:\HXY\VS2015Project\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\SimpleChess.exe
+E:\HXY\VS2015Project\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\SimpleChess.pdb
