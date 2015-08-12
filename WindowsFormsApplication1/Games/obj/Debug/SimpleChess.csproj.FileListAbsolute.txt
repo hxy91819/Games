@@ -7,3 +7,9 @@ E:\HXY\VS2015Project\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug
 E:\HXY\VS2015Project\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\SimpleChess.csproj.GenerateResource.Cache
 E:\HXY\VS2015Project\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\SimpleChess.exe
 E:\HXY\VS2015Project\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\SimpleChess.pdb
+E:\GitHub\Games\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\SimpleChess.exe.config
+E:\GitHub\Games\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\SimpleChess.exe
+E:\GitHub\Games\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\SimpleChess.pdb
+E:\GitHub\Games\WindowsFormsApplication1\Games\bin\Debug\SimpleChess.exe.config
+E:\GitHub\Games\WindowsFormsApplication1\Games\obj\Debug\SimpleChess.exe
+E:\GitHub\Games\WindowsFormsApplication1\Games\obj\Debug\SimpleChess.pdb

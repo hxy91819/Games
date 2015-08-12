@@ -15,6 +15,7 @@ namespace SimpleChess
         /// 棋盘此点上棋子的ID：无，0；红1，1；红2，2；黑1，1；黑2，2。
         /// </summary>
         private int chessIDInt;
+        private Chess onChess;
         #region 设置棋子八象限关联棋子属性
         private Chessponit leftUpChesspoint;
         private Chessponit upChesspoint;
@@ -168,6 +169,21 @@ namespace SimpleChess
             set
             {
                 chessPoint = value;
+            }
+        }
+        /// <summary>
+        /// 棋盘上的棋子
+        /// </summary>
+        public Chess OnChess
+        {
+            get
+            {
+                return onChess;
+            }
+
+            set
+            {
+                onChess = value;
             }
         }
     }

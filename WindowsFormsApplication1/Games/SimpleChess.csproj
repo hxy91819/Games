@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Chess.cs" />
     <Compile Include="Chessponit.cs" />
     <Compile Include="ProjectConst.cs" />
     <Compile Include="FrmChess.cs">
