@@ -13,3 +13,12 @@ E:\GitHub\Games\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\Simp
 E:\GitHub\Games\WindowsFormsApplication1\Games\bin\Debug\SimpleChess.exe.config
 E:\GitHub\Games\WindowsFormsApplication1\Games\obj\Debug\SimpleChess.exe
 E:\GitHub\Games\WindowsFormsApplication1\Games\obj\Debug\SimpleChess.pdb
+E:\GitHub\Games\Games\Games\bin\Debug\SimpleChess.exe.config
+E:\GitHub\Games\Games\Games\obj\Debug\SimpleChess.exe
+E:\GitHub\Games\Games\Games\obj\Debug\SimpleChess.pdb
+E:\GitHub\Games\Games\Games\bin\Debug\SimpleChess.exe
+E:\GitHub\Games\Games\Games\bin\Debug\SimpleChess.pdb
+E:\GitHub\Games\Games\Games\obj\Debug\SimpleChess.csprojResolveAssemblyReference.cache
+E:\GitHub\Games\Games\Games\obj\Debug\SimpleChess.FrmChess.resources
+E:\GitHub\Games\Games\Games\obj\Debug\SimpleChess.Properties.Resources.resources
+E:\GitHub\Games\Games\Games\obj\Debug\SimpleChess.csproj.GenerateResource.Cache

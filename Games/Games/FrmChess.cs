@@ -46,7 +46,10 @@ namespace SimpleChess
         /// </summary>
         private void drawChessBoard()
         {
-            Graphics g = pnlChessBoard.CreateGraphics();
+            //画图最好是画在一个bmp中
+            Bitmap bmp = new Bitmap(this.pnlChessBoard.Width, this.pnlChessBoard.Height);
+            Graphics g = Graphics.FromImage(bmp);
+            //Graphics g = pnlChessBoard.CreateGraphics();
             g.SmoothingMode = SmoothingMode.AntiAlias;
             //画出左侧竖线
             g.DrawLine(Pens.Blue, new Point(INDEX_X, INDEX_Y), new Point(INDEX_X, INDEX_Y + CHESS_BOARD_WIDTH));
@@ -57,52 +60,65 @@ namespace SimpleChess
             //画出交叉线
             g.DrawLine(Pens.Blue, new Point(INDEX_X, INDEX_Y), new Point(INDEX_X + CHESS_BOARD_WIDTH, INDEX_Y + CHESS_BOARD_WIDTH));
             g.DrawLine(Pens.Blue, new Point(INDEX_X, INDEX_Y + CHESS_BOARD_WIDTH), new Point(INDEX_X + CHESS_BOARD_WIDTH, INDEX_Y));
+            //绑定位图到pnl中。
+            pnlChessBoard.BackgroundImage = bmp;
         }
         /// <summary>
         /// 创建棋子
         /// </summary>
         private void createChess()
         {
-            //使用panel作为chess
+            
+
+            //Chess的显示载体
             Panel pnlChessRed1 = new Panel();
             pnlChessBoard.Controls.Add(pnlChessRed1);
             pnlChessRed1.Size = new System.Drawing.Size(CHESS_WIDTH, CHESS_HEIGHT);//设置棋子宽度
-            pnlChessRed1.Location = new System.Drawing.Point(INDEX_X - CHESS_WIDTH / 2, INDEX_Y - CHESS_HEIGHT / 2);//设置棋子初始位置
             pnlChessRed1.BackColor = Color.Red;
+            
 
             Panel pnlChessRed2 = new Panel();
             pnlChessBoard.Controls.Add(pnlChessRed2);
             pnlChessRed2.Size = new System.Drawing.Size(CHESS_WIDTH, CHESS_HEIGHT);//设置棋子宽度
-            pnlChessRed2.Location = new System.Drawing.Point(INDEX_X + CHESS_BOARD_WIDTH - CHESS_WIDTH / 2, INDEX_Y - CHESS_HEIGHT / 2);//设置棋子初始位置
             pnlChessRed2.BackColor = Color.Red;
 
             Panel pnlChessBlack1 = new Panel();
             pnlChessBoard.Controls.Add(pnlChessBlack1);
             pnlChessBlack1.Size = new System.Drawing.Size(CHESS_WIDTH, CHESS_HEIGHT);//设置棋子宽度
-            pnlChessBlack1.Location = new System.Drawing.Point(INDEX_X - CHESS_WIDTH / 2, INDEX_Y + CHESS_BOARD_WIDTH - CHESS_HEIGHT / 2);//设置棋子初始位置
             pnlChessBlack1.BackColor = Color.Black;
 
             Panel pnlChessBlack2 = new Panel();
             pnlChessBoard.Controls.Add(pnlChessBlack2);
             pnlChessBlack2.Size = new System.Drawing.Size(CHESS_WIDTH, CHESS_HEIGHT);//设置棋子宽度
-            pnlChessBlack2.Location = new System.Drawing.Point(INDEX_X + CHESS_BOARD_WIDTH - CHESS_WIDTH / 2, INDEX_Y + CHESS_BOARD_WIDTH - CHESS_HEIGHT / 2);//设置棋子初始位置
             pnlChessBlack2.BackColor = Color.Black;
 
-        }
+            //Chess的逻辑载体
+            Chess chessRed1 = new Chess();
+            chessRed1.ChessPanel = pnlChessRed1;
+            chessRed1.InChessPoint = this.leftUpChesspoint;
+            chessRed1.getPanelPosition();
 
+            Chess chessRed2 = new Chess();
+            chessRed2.ChessPanel = pnlChessRed2;
+            chessRed2.InChessPoint = this.rightUpChesspoint;
+            chessRed2.getPanelPosition();
+
+            Chess chessBlack1 = new Chess();
+            chessBlack1.ChessPanel = pnlChessBlack1;
+            chessBlack1.InChessPoint = this.leftDownChesspoint;
+            chessBlack1.getPanelPosition();
+
+            Chess chessBlack2 = new Chess();
+            chessBlack2.ChessPanel = pnlChessBlack2;
+            chessBlack2.InChessPoint = this.rightDownChesspoint;
+            chessBlack2.getPanelPosition();
+
+        }
         /// <summary>
-        /// 在日志框中写入日志
+        /// 创建/初始化棋盘（给棋盘上每个点赋值定义）
         /// </summary>
-        /// <param name="forWrite"></param>
-        private void wirteLog(string forWrite)
+        private void createChessBoard()
         {
-            richTextBoxLog.AppendText(forWrite + "\n");
-        }
-
-        private void frmChess_Load(object sender, EventArgs e)
-        {
-            this.wirteLog("欢迎进入" + this.Text);
-            this.wirteLog("版本：" + ProjectConst.VERSION);
             #region 初始化棋盘可行走的点的属性，并配置各个点之间的关联性
             //绑定棋盘上的点到此类中
             this.leftUpChesspoint = new Chessponit();
@@ -141,8 +157,26 @@ namespace SimpleChess
             this.rightDownChesspoint.UpChesspoint = this.rightUpChesspoint;
             this.rightDownChesspoint.LeftUpChesspoint = this.MiddleChesspoint;
             this.rightDownChesspoint.LeftChesspoint = this.leftDownChesspoint;
-            this.rightDownChesspoint.ChessPoint = new Point(INDEX_X + CHESS_BOARD_WIDTH - CHESS_WIDTH / 2, INDEX_Y + CHESS_BOARD_WIDTH - CHESS_HEIGHT / 2); 
+            this.rightDownChesspoint.ChessPoint = new Point(INDEX_X + CHESS_BOARD_WIDTH - CHESS_WIDTH / 2, INDEX_Y + CHESS_BOARD_WIDTH - CHESS_HEIGHT / 2);
             #endregion
+        }
+
+        /// <summary>
+        /// 在日志框中写入日志
+        /// </summary>
+        /// <param name="forWrite"></param>
+        private void wirteLog(string forWrite)
+        {
+            richTextBoxLog.AppendText(forWrite + "\n");
+        }
+
+        private void frmChess_Load(object sender, EventArgs e)
+        {
+            this.wirteLog("欢迎进入" + this.Text);
+            this.wirteLog("版本：" + ProjectConst.VERSION);
+            this.drawChessBoard();
+            this.createChessBoard();
+            this.createChess();
 
             tmrLazyLoad.Enabled = true;
         }
@@ -150,7 +184,6 @@ namespace SimpleChess
         private void btnStart_Click(object sender, EventArgs e)
         {
             this.wirteLog("开始游戏...");
-            this.createChess();
         }
 
         /// <summary>
@@ -160,8 +193,7 @@ namespace SimpleChess
         /// <param name="e"></param>
         private void tmrLazyLoad_Tick(object sender, EventArgs e)
         {
-            //需要延迟绘画，否则会被windows绘制窗体所覆盖
-            this.drawChessBoard();
+            tmrLazyLoad.Enabled = false;
         }
     }
 }

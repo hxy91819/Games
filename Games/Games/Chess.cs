@@ -44,5 +44,16 @@ namespace SimpleChess
                 chessPanel = value;
             }
         }
+
+        public bool getPanelPosition()
+        {
+            if(this.ChessPanel == null || this.InChessPoint == null)
+            {
+                return false;
+            }
+            this.ChessPanel.Location = this.InChessPoint.ChessPoint;
+            return true;
+        }
+
     }
 }
