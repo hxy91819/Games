@@ -89,9 +89,9 @@ namespace SimpleChessWPF
 
         private void btnStart_Click(object sender, RoutedEventArgs e)
         {
-            //drawChessBoard();
+            drawChessBoard();
 
-            drawTest();
+            //drawTest();
         }
     }
 }
