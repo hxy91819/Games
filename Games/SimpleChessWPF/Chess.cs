@@ -7,13 +7,18 @@ namespace SimpleChessWPF
     /// </summary>
     public class Chess
     {
-        private Chesspoint inChessPoint;
+        private ChessPoint inChessPoint;
         private Grid chessGrid;
-
+        private bool selected;
+        private int camp;
+        public Chess()
+        {
+            selected = false;
+        }
         /// <summary>
         /// 棋子所在的棋盘点
         /// </summary>
-        public Chesspoint InChessPoint
+        public ChessPoint InChessPoint
         {
             get
             {
@@ -25,7 +30,9 @@ namespace SimpleChessWPF
                 inChessPoint = value;
             }
         }
-
+        /// <summary>
+        /// 棋子所对应的展示对象Grid
+        /// </summary>
         public Grid ChessGrid
         {
             get
@@ -38,17 +45,35 @@ namespace SimpleChessWPF
                 chessGrid = value;
             }
         }
-
-        public bool setGridPosition()
+        /// <summary>
+        /// 棋子是否被选中
+        /// </summary>
+        public bool Selected
         {
-            if(this.ChessGrid == null || this.InChessPoint == null)
+            get
             {
-                return false;
+                return selected;
             }
-            //InChessPoint.ChessPoint
-            this.ChessGrid.Margin = InChessPoint.ChessThickness;
-            return true;
-        }
 
+            set
+            {
+                selected = value;
+            }
+        }
+        /// <summary>
+        /// 棋子阵营 0 红， 1 黑
+        /// </summary>
+        public int Camp
+        {
+            get
+            {
+                return camp;
+            }
+
+            set
+            {
+                camp = value;
+            }
+        }
     }
 }

@@ -5,27 +5,27 @@ namespace SimpleChessWPF
     /// <summary>
     /// 棋盘可以行动的点
     /// </summary>
-    public class Chesspoint
+    public class ChessPoint
     {
         /// <summary>
         /// 棋盘此点上棋子的ID：无，0；红1，1；红2，2；黑1，1；黑2，2。
         /// </summary>
         private Chess onChess;
         #region 设置棋子八象限关联棋子属性
-        private Chesspoint leftUpChesspoint;
-        private Chesspoint upChesspoint;
-        private Chesspoint rightUpChesspoint;
-        private Chesspoint leftChesspoint;
-        private Chesspoint rightChesspoint;
-        private Chesspoint leftDownChesspoint;
-        private Chesspoint downChesspoint;
-        private Chesspoint rightDownChesspoint;
+        private ChessPoint leftUpChesspoint;
+        private ChessPoint upChesspoint;
+        private ChessPoint rightUpChesspoint;
+        private ChessPoint leftChesspoint;
+        private ChessPoint rightChesspoint;
+        private ChessPoint leftDownChesspoint;
+        private ChessPoint downChesspoint;
+        private ChessPoint rightDownChesspoint;
         #endregion
         /// <summary>
         /// 棋盘此点的给panel放置的位置
         /// </summary>
-        private Thickness chessThickness; 
-        public Chesspoint()
+        private ChessPosition chessPos;
+        public ChessPoint()
         {
             leftUpChesspoint = null;
             upChesspoint = null;
@@ -37,7 +37,7 @@ namespace SimpleChessWPF
             rightDownChesspoint = null;
         }
 
-        public Chesspoint LeftUpChesspoint
+        public ChessPoint LeftUpChesspoint
         {
             get
             {
@@ -50,7 +50,7 @@ namespace SimpleChessWPF
             }
         }
 
-        public Chesspoint UpChesspoint
+        public ChessPoint UpChesspoint
         {
             get
             {
@@ -63,7 +63,7 @@ namespace SimpleChessWPF
             }
         }
 
-        public Chesspoint RightUpChesspoint
+        public ChessPoint RightUpChesspoint
         {
             get
             {
@@ -76,7 +76,7 @@ namespace SimpleChessWPF
             }
         }
 
-        public Chesspoint LeftChesspoint
+        public ChessPoint LeftChesspoint
         {
             get
             {
@@ -89,7 +89,7 @@ namespace SimpleChessWPF
             }
         }
 
-        public Chesspoint RightChesspoint
+        public ChessPoint RightChesspoint
         {
             get
             {
@@ -102,7 +102,7 @@ namespace SimpleChessWPF
             }
         }
 
-        public Chesspoint LeftDownChesspoint
+        public ChessPoint LeftDownChesspoint
         {
             get
             {
@@ -115,7 +115,7 @@ namespace SimpleChessWPF
             }
         }
 
-        public Chesspoint DownChesspoint
+        public ChessPoint DownChesspoint
         {
             get
             {
@@ -128,7 +128,7 @@ namespace SimpleChessWPF
             }
         }
 
-        public Chesspoint RightDownChesspoint
+        public ChessPoint RightDownChesspoint
         {
             get
             {
@@ -157,16 +157,16 @@ namespace SimpleChessWPF
             }
         }
 
-        public Thickness ChessThickness
+        public ChessPosition ChessPos
         {
             get
             {
-                return chessThickness;
+                return chessPos;
             }
 
             set
             {
-                chessThickness = value;
+                chessPos = value;
             }
         }
     }

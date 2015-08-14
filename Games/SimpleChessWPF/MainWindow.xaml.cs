@@ -32,10 +32,22 @@ namespace SimpleChessWPF
         /// </summary>
         const int CHESS_HEIGHT = 28;
         #endregion
+        /// <summary>
+        /// 用于绘制棋盘所使用的Points
+        /// </summary>
         private Point[] points = new Point[5];
-        private Thickness[] thicknesses = new Thickness[5];
-        private Chesspoint[] chessPoints = new Chesspoint[5];
-        private Chess[] chesses = new Chess[5];
+        /// <summary>
+        /// 棋子在棋盘上可以走的位置
+        /// </summary>
+        private ChessPoint[] chessPoints = new ChessPoint[5];
+        /// <summary>
+        /// 棋子
+        /// </summary>
+        private Chess[] chesses = new Chess[4];
+        /// <summary>
+        /// 棋子位置类
+        /// </summary>
+        private ChessPosition[] chessPos = new ChessPosition[5];
         private bool isLocated = false;//是否已经为棋盘的点、棋子进行定位
         public MainWindow()
         {
@@ -46,7 +58,7 @@ namespace SimpleChessWPF
         /// </summary>
         private void drawChessBoard()
         {
-            iniLocation();
+            //iniLocation();
             //设定Point的轨迹，完成一个一笔画
             // Create a figure that describes a   
             PathFigure myPathFigure = new PathFigure();
@@ -67,7 +79,7 @@ namespace SimpleChessWPF
             myPath.StrokeThickness = 1;
             myPath.Data = myPathGeometry;
 
-            grdChess.Children.Add(myPath);
+            cvsChess.Children.Add(myPath);
         }
         /// <summary>
         /// 记录操作日志
@@ -89,11 +101,12 @@ namespace SimpleChessWPF
             points[3] = new Point(INDEX_X, INDEX_Y + CHESS_BOARD_WIDTH);//左下
             points[4] = new Point(INDEX_X + CHESS_BOARD_WIDTH, INDEX_Y + CHESS_BOARD_WIDTH);//右下
 
-            thicknesses[0] = new Thickness(INDEX_X, INDEX_Y, 0, 0);//左上
-            thicknesses[1] = new Thickness(INDEX_X + CHESS_BOARD_WIDTH, INDEX_Y, 0, 0);//右上
-            thicknesses[2] = new Thickness(INDEX_X + CHESS_BOARD_WIDTH / 2, INDEX_Y + CHESS_BOARD_WIDTH / 2, 0, 0);//中间
-            thicknesses[3] = new Thickness(INDEX_X, INDEX_Y + CHESS_BOARD_WIDTH, 0, 0);//左下
-            thicknesses[4] = new Thickness(INDEX_X + CHESS_BOARD_WIDTH, INDEX_Y + CHESS_BOARD_WIDTH, 0, 0);//右下
+            //设置棋子位置，需要考虑棋子本身的宽高
+            chessPos[0] = new ChessPosition(INDEX_X - CHESS_WIDTH / 2, INDEX_Y - CHESS_HEIGHT / 2);
+            chessPos[1] = new ChessPosition(INDEX_X + CHESS_BOARD_WIDTH - CHESS_WIDTH / 2, INDEX_Y - CHESS_HEIGHT / 2);
+            chessPos[2] = new ChessPosition(INDEX_X + CHESS_BOARD_WIDTH / 2 - CHESS_WIDTH / 2, INDEX_Y + CHESS_BOARD_WIDTH / 2 - CHESS_HEIGHT / 2);
+            chessPos[3] = new ChessPosition(INDEX_X - CHESS_WIDTH / 2, INDEX_Y + CHESS_BOARD_WIDTH - CHESS_HEIGHT / 2);
+            chessPos[4] = new ChessPosition(INDEX_X + CHESS_BOARD_WIDTH - CHESS_WIDTH / 2, INDEX_Y + CHESS_BOARD_WIDTH - CHESS_HEIGHT / 2);
             return true;
         }
         /// <summary>
@@ -101,37 +114,40 @@ namespace SimpleChessWPF
         /// </summary>
         private void createChessPoints()
         {
+            //必须为每个数组对象创建实例。
+            for (int i = 0; i < 5; i++)
+            {
+                chessPoints[i] = new ChessPoint();
+            }
             #region 初始化棋盘可行走的点的属性，并配置各个点之间的关联性
             //绑定棋盘上的点到此类中
             //这将决定了每个点可以走向的点
             //1
-            //chessPoints[0].DownChesspoint = chessPoints[3];
-            //chessPoints[0].RightDownChesspoint = chessPoints[2];
-            chessPoints[0].ChessThickness = thicknesses[0];
+            chessPoints[0].DownChesspoint = chessPoints[3];
+            chessPoints[0].RightDownChesspoint = chessPoints[2];
+            chessPoints[0].ChessPos = chessPos[0];
 
-            /*
             //2
             chessPoints[1].LeftDownChesspoint = chessPoints[2];
             chessPoints[1].DownChesspoint = chessPoints[4];
-            chessPoints[1].ChessThickness = thicknesses[1];
+            chessPoints[1].ChessPos = chessPos[1];
 
             //3
             chessPoints[2].LeftUpChesspoint = chessPoints[0];
             chessPoints[2].RightUpChesspoint = chessPoints[1];
             chessPoints[2].LeftDownChesspoint = chessPoints[3];
             chessPoints[2].RightDownChesspoint = chessPoints[4];
-            chessPoints[2].ChessThickness = thicknesses[2];
+            chessPoints[2].ChessPos = chessPos[2];
             //4
             chessPoints[3].UpChesspoint = chessPoints[0];
             chessPoints[3].RightUpChesspoint = chessPoints[2];
             chessPoints[3].RightChesspoint = chessPoints[4];
-            chessPoints[3].ChessThickness = thicknesses[3];
+            chessPoints[3].ChessPos = chessPos[3];
             //5
             chessPoints[4].UpChesspoint = chessPoints[1];
             chessPoints[4].LeftUpChesspoint = chessPoints[2];
             chessPoints[4].LeftChesspoint = chessPoints[3];
-            chessPoints[4].ChessThickness = thicknesses[4];
-            */
+            chessPoints[4].ChessPos = chessPos[4];
             #endregion
         }
         /// <summary>
@@ -141,14 +157,77 @@ namespace SimpleChessWPF
         {
             //End Here!!!
             //棋子一共有四颗，初始位置为四个角。序号从上至下，从左至右。颜色上红，下黑。
-            chesses[0].InChessPoint = chessPoints[0];
-            chesses[0].ChessGrid = new Grid();
-            chesses[0].ChessGrid.Width = CHESS_WIDTH;
-            chesses[0].ChessGrid.Height = CHESS_HEIGHT;
-            chesses[0].ChessGrid.Background = Brushes.Red;
-            grdChess.Children.Add(chesses[0].ChessGrid);
-            chesses[0].setGridPosition();
+            int chessCount = 0;//棋子的数量，棋子应该只有4颗
+            for (int i = 0; i < 5; i++)
+            {
+                if (i == 2)
+                {
+                    continue;
+                }
+                chesses[chessCount] = new Chess();
+                chesses[chessCount].InChessPoint = chessPoints[i];
+                chesses[chessCount].ChessGrid = new Grid();
+                chesses[chessCount].ChessGrid.Width = CHESS_WIDTH;
+                chesses[chessCount].ChessGrid.Height = CHESS_HEIGHT;
+                if (i == 0 || i == 1)
+                {
+                    chesses[chessCount].Camp = 0;
+                //    chesses[chessCount].ChessGrid.Background = Brushes.Red;
+                }
+                else
+                {
+                    chesses[chessCount].Camp = 1;
+                //    chesses[chessCount].ChessGrid.Background = Brushes.Black;
+                }
+                cvsChess.Children.Add(chesses[chessCount].ChessGrid);
+                Canvas.SetTop(chesses[chessCount].ChessGrid, chesses[chessCount].InChessPoint.ChessPos.Top);
+                Canvas.SetLeft(chesses[chessCount].ChessGrid, chesses[chessCount].InChessPoint.ChessPos.Left);
+                chessCount++;
+            }
+            //选中第一个棋子
+            chesses[0].Selected = true;
+            setChessGridStyle();
         }
+        /// <summary>
+        /// 根据棋子的属性，设置棋子的展示体(Grid的颜色、选中状态）
+        /// </summary>
+        /// <param name="chess"></param>
+        private void setChessGridStyle(int chessID = -1)
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                if (chessID != -1)
+                {
+                    i = chessID;
+                }
+
+                if (chesses[i].Selected)
+                {
+                    //给棋子设置一个边框
+                    chesses[i].ChessGrid.ShowGridLines = true;
+                    Border border = new Border() { BorderBrush = new SolidColorBrush(Colors.Gray), BorderThickness = new Thickness(3) };
+                    Grid.SetRow(border, 0);
+                    Grid.SetColumn(border, 0);
+                    chesses[i].ChessGrid.Children.Add(border);
+                }
+                //设置棋子的颜色
+                if (chesses[i].Camp == 0)
+                {
+                    chesses[i].ChessGrid.Background = Brushes.Red;
+                }
+                else
+                {
+                    chesses[i].ChessGrid.Background = Brushes.Blue;
+                }
+
+                if (chessID != -1)
+                {
+                    break;
+                }
+            }
+        }
+
+        #region 测试代码
         /// <summary>
         /// 不连续线条绘画测试
         /// </summary>
@@ -173,8 +252,9 @@ namespace SimpleChessWPF
             myPath.StrokeThickness = 1;
             myPath.Data = myPathGeometry;
 
-            grdChess.Children.Add(myPath);
-        }
+            cvsChess.Children.Add(myPath);
+        } 
+        #endregion
 
         private void btnStart_Click(object sender, RoutedEventArgs e)
         {
@@ -184,7 +264,7 @@ namespace SimpleChessWPF
         private void FrmMain_Loaded(object sender, RoutedEventArgs e)
         {
             isLocated = iniLocation();
-            if(!isLocated)
+            if (!isLocated)
             {
                 writeLog("Load failed! Sorry!");
             }
