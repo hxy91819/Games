@@ -165,19 +165,20 @@ namespace SimpleChessWPF
                     continue;
                 }
                 chesses[chessCount] = new Chess();
-                chesses[chessCount].InChessPoint = chessPoints[i];
+                chesses[chessCount].InChessPoint = chessPoints[i];//设置棋子在棋盘上的点
                 chesses[chessCount].ChessGrid = new Grid();
                 chesses[chessCount].ChessGrid.Width = CHESS_WIDTH;
                 chesses[chessCount].ChessGrid.Height = CHESS_HEIGHT;
+                chessPoints[i].OnChess = chesses[chessCount];//设置棋盘上的点上的棋子
                 if (i == 0 || i == 1)
                 {
                     chesses[chessCount].Camp = 0;
-                //    chesses[chessCount].ChessGrid.Background = Brushes.Red;
+                    //    chesses[chessCount].ChessGrid.Background = Brushes.Red;
                 }
                 else
                 {
                     chesses[chessCount].Camp = 1;
-                //    chesses[chessCount].ChessGrid.Background = Brushes.Black;
+                    //    chesses[chessCount].ChessGrid.Background = Brushes.Black;
                 }
                 cvsChess.Children.Add(chesses[chessCount].ChessGrid);
                 Canvas.SetTop(chesses[chessCount].ChessGrid, chesses[chessCount].InChessPoint.ChessPos.Top);
@@ -209,6 +210,8 @@ namespace SimpleChessWPF
                     Grid.SetRow(border, 0);
                     Grid.SetColumn(border, 0);
                     chesses[i].ChessGrid.Children.Add(border);
+                    //为选中的棋子设置CtrlPanel
+                    setCtrlPanel(i);
                 }
                 //设置棋子的颜色
                 if (chesses[i].Camp == 0)
@@ -226,7 +229,112 @@ namespace SimpleChessWPF
                 }
             }
         }
+        /// <summary>
+        /// 根据当前选中的棋子设置控制面板（仅使可操作的按钮能够使用）
+        /// </summary>
+        private void setCtrlPanel(int chessID)
+        {
+            //根据棋子的属性，来设置按钮的可用性
+            if (chesses[chessID].InChessPoint.LeftUpChesspoint == null || chesses[chessID].InChessPoint.LeftUpChesspoint.OnChess != null)
+            {
+                btnLeftUp.IsEnabled = false;
+            }
+            else
+            {
+                btnLeftUp.IsEnabled = true;
+            }
 
+            if (chesses[chessID].InChessPoint.UpChesspoint == null || chesses[chessID].InChessPoint.UpChesspoint.OnChess != null)
+            {
+                btnUp.IsEnabled = false;
+            }
+            else
+            {
+                btnUp.IsEnabled = true;
+            }
+
+            if (chesses[chessID].InChessPoint.RightUpChesspoint == null || chesses[chessID].InChessPoint.RightUpChesspoint.OnChess != null)
+            {
+                btnRightUp.IsEnabled = false;
+            }
+            else
+            {
+                btnRightUp.IsEnabled = true;
+            }
+
+            if (chesses[chessID].InChessPoint.LeftChesspoint == null || chesses[chessID].InChessPoint.LeftChesspoint.OnChess != null)
+            {
+                btnLeft.IsEnabled = false;
+            }
+            else
+            {
+                btnLeft.IsEnabled = true;
+            }
+
+            if (chesses[chessID].InChessPoint.RightChesspoint == null || chesses[chessID].InChessPoint.RightChesspoint.OnChess != null)
+            {
+                btnRight.IsEnabled = false;
+            }
+            else
+            {
+                btnRight.IsEnabled = true;
+            }
+
+            if (chesses[chessID].InChessPoint.LeftDownChesspoint == null || chesses[chessID].InChessPoint.LeftDownChesspoint.OnChess != null)
+            {
+                btnLeftDown.IsEnabled = false;
+            }
+            else
+            {
+                btnLeftDown.IsEnabled = true;
+            }
+
+            if (chesses[chessID].InChessPoint.DownChesspoint == null || chesses[chessID].InChessPoint.DownChesspoint.OnChess != null)
+            {
+                btnDown.IsEnabled = false;
+            }
+            else
+            {
+                btnDown.IsEnabled = true;
+            }
+
+            if (chesses[chessID].InChessPoint.RightDownChesspoint == null || chesses[chessID].InChessPoint.RightDownChesspoint.OnChess != null)
+            {
+                btnRightDown.IsEnabled = false;
+            }
+            else
+            {
+                btnRightDown.IsEnabled = true;
+            }
+        }
+        /// <summary>
+        /// 移动棋子
+        /// </summary>
+        private void moveChess(int btnTagVal)
+        {
+            //根据控制按钮的tag值来判断是做了什么移动，然后将棋子移动到指定位置（无需判断移动位置是否合法）
+            switch(btnTagVal)
+            {
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    break;
+                case 6:
+                    break;
+                case 7:
+                    break;
+                case 8:
+                    break;
+                default:
+                    break;
+            }
+        }
         #region 测试代码
         /// <summary>
         /// 不连续线条绘画测试
@@ -253,7 +361,7 @@ namespace SimpleChessWPF
             myPath.Data = myPathGeometry;
 
             cvsChess.Children.Add(myPath);
-        } 
+        }
         #endregion
 
         private void btnStart_Click(object sender, RoutedEventArgs e)
