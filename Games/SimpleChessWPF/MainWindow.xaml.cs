@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
@@ -49,6 +50,8 @@ namespace SimpleChessWPF
         /// </summary>
         private ChessPosition[] chessPos = new ChessPosition[5];
         private bool isLocated = false;//是否已经为棋盘的点、棋子进行定位
+        private int selectedChessID;//选中的棋子ID
+        private Border[] chessBorders = new Border[4];//棋子的边框
         public MainWindow()
         {
             InitializeComponent();
@@ -160,6 +163,12 @@ namespace SimpleChessWPF
             int chessCount = 0;//棋子的数量，棋子应该只有4颗
             for (int i = 0; i < 5; i++)
             {
+                //如果操作的棋子数，大于4了，则应该跳出
+                if (chessCount >= 4)
+                {
+                    break;
+                }
+                //初始状态i == 2处没有棋子
                 if (i == 2)
                 {
                     continue;
@@ -204,14 +213,19 @@ namespace SimpleChessWPF
 
                 if (chesses[i].Selected)
                 {
+                    selectedChessID = i;
                     //给棋子设置一个边框
                     chesses[i].ChessGrid.ShowGridLines = true;
-                    Border border = new Border() { BorderBrush = new SolidColorBrush(Colors.Gray), BorderThickness = new Thickness(3) };
-                    Grid.SetRow(border, 0);
-                    Grid.SetColumn(border, 0);
-                    chesses[i].ChessGrid.Children.Add(border);
+
+                    chesses[i].ChessGrid.Children.Add(chessBorders[i]);
                     //为选中的棋子设置CtrlPanel
                     setCtrlPanel(i);
+                }
+                else
+                {
+                    //没选中则取消边框
+                    chesses[i].ChessGrid.ShowGridLines = false;
+                    chesses[i].ChessGrid.Children.Remove(chessBorders[i]);
                 }
                 //设置棋子的颜色
                 if (chesses[i].Camp == 0)
@@ -310,30 +324,69 @@ namespace SimpleChessWPF
         /// <summary>
         /// 移动棋子
         /// </summary>
-        private void moveChess(int btnTagVal)
+        private void moveChess(int btnTagVal, int chessID)
         {
+            if (!chesses[chessID].Selected)
+            {
+                writeLog("移动棋子发生错误，使用了错误的棋子ID chessID = " + chessID);
+                return;
+            }
+            //移动前需要取消原来棋盘上的点
+            chesses[chessID].InChessPoint.OnChess = null;
             //根据控制按钮的tag值来判断是做了什么移动，然后将棋子移动到指定位置（无需判断移动位置是否合法）
-            switch(btnTagVal)
+            switch (btnTagVal)
             {
                 case 1:
+                    //重新设置棋子在棋盘上的位置，并重绘，
+                    chesses[chessID].InChessPoint = chesses[chessID].InChessPoint.LeftUpChesspoint;
                     break;
                 case 2:
+                    chesses[chessID].InChessPoint = chesses[chessID].InChessPoint.UpChesspoint;
                     break;
                 case 3:
+                    chesses[chessID].InChessPoint = chesses[chessID].InChessPoint.RightUpChesspoint;
                     break;
                 case 4:
+                    chesses[chessID].InChessPoint = chesses[chessID].InChessPoint.LeftChesspoint;
                     break;
                 case 5:
+                    chesses[chessID].InChessPoint = chesses[chessID].InChessPoint.RightChesspoint;
                     break;
                 case 6:
+                    chesses[chessID].InChessPoint = chesses[chessID].InChessPoint.LeftDownChesspoint;
                     break;
                 case 7:
+                    chesses[chessID].InChessPoint = chesses[chessID].InChessPoint.DownChesspoint;
                     break;
                 case 8:
+                    chesses[chessID].InChessPoint = chesses[chessID].InChessPoint.RightDownChesspoint;
                     break;
                 default:
                     break;
             }
+            //移动后需要重新配置棋盘上的点
+            chesses[chessID].InChessPoint.OnChess = chesses[chessID];
+            //重绘
+            Canvas.SetTop(chesses[chessID].ChessGrid, chesses[chessID].InChessPoint.ChessPos.Top);
+            Canvas.SetLeft(chesses[chessID].ChessGrid, chesses[chessID].InChessPoint.ChessPos.Left);
+            //选中另一阵营的棋子
+            chesses[chessID].Selected = false;
+            int campType = chesses[chessID].Camp;
+            for (int i = 0; i < 4; i++)
+            {
+                if (i == chessID)
+                {
+                    continue;
+                }
+                if (chesses[i].Camp != campType)
+                {
+                    selectedChessID = i;
+                    chesses[i].Selected = true;
+                    break;
+                }
+            }
+            //重新绘制棋子
+            setChessGridStyle();
         }
         #region 测试代码
         /// <summary>
@@ -376,10 +429,49 @@ namespace SimpleChessWPF
             {
                 writeLog("Load failed! Sorry!");
             }
+
+            for (int i = 0; i < 4; i++)
+            {
+                chessBorders[i] = new Border() { BorderBrush = new SolidColorBrush(Colors.Yellow), BorderThickness = new Thickness(3) };
+                Grid.SetRow(chessBorders[i], 0);
+                Grid.SetColumn(chessBorders[i], 0);
+            }
             drawChessBoard();
             createChessPoints();
             createChess();
             writeLog("Thank you for playing SimpleChess, have fun!");
+        }
+
+        private void btnCtrl_Click(object sender, RoutedEventArgs e)
+        {
+            Button btnCtrl = (Button)sender;
+            moveChess(Convert.ToInt32(btnCtrl.Tag.ToString()), selectedChessID);
+        }
+        /// <summary>
+        /// 切换棋子
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnSwith_Click(object sender, RoutedEventArgs e)
+        {
+            //选中另一阵营的棋子
+            chesses[selectedChessID].Selected = false;
+            int campType = chesses[selectedChessID].Camp;
+            for (int i = 0; i < 4; i++)
+            {
+                if (i == selectedChessID)
+                {
+                    continue;
+                }
+                if (chesses[i].Camp == campType)
+                {
+                    selectedChessID = i;
+                    chesses[i].Selected = true;
+                    break;
+                }
+            }
+            //重新绘制棋子
+            setChessGridStyle();
         }
     }
 }

@@ -13,15 +13,15 @@
             </DockPanel>
             <Grid Width="228" DockPanel.Dock="Right">
                 <Button x:Name="btnStart" Content="开始游戏" HorizontalAlignment="Left" Margin="80,36,0,0" VerticalAlignment="Top" Width="75" Click="btnStart_Click"/>
-                <Button x:Name="btnLeftUp" Content="↖" HorizontalAlignment="Left" Margin="56,199,0,0" VerticalAlignment="Top" Width="35" Height="35" Tag="1"/>
-                <Button x:Name="btnUp" Content="↑" HorizontalAlignment="Left" Margin="101,199,0,0" VerticalAlignment="Top" Width="35" Height="35" Tag="2"/>
-                <Button x:Name="btnRightUp" Content="↗" HorizontalAlignment="Left" Margin="146,199,0,0" VerticalAlignment="Top" Width="35" Height="35" Tag="3"/>
-                <Button x:Name="btnLeft" Content="←" HorizontalAlignment="Left" Margin="56,244,0,0" VerticalAlignment="Top" Width="35" Height="35" Tag="4"/>
-                <Button x:Name="btnMiddle" Content="〇" HorizontalAlignment="Left" Margin="101,244,0,0" VerticalAlignment="Top" Width="35" Height="35"/>
-                <Button x:Name="btnRight" Content="→" HorizontalAlignment="Left" Margin="146,244,0,0" VerticalAlignment="Top" Width="35" Height="35" Tag="5"/>
-                <Button x:Name="btnLeftDown" Content="↙" HorizontalAlignment="Left" Margin="56,289,0,0" VerticalAlignment="Top" Width="35" Height="35" Tag="6"/>
-                <Button x:Name="btnDown" Content="↓" HorizontalAlignment="Left" Margin="101,289,0,0" VerticalAlignment="Top" Width="35" Height="35" Tag="7"/>
-                <Button x:Name="btnRightDown" Content="↘" HorizontalAlignment="Left" Margin="146,289,0,0" VerticalAlignment="Top" Width="35" Height="35" Tag="8"/>
+                <Button x:Name="btnLeftUp" Content="↖" HorizontalAlignment="Left" Margin="56,199,0,0" VerticalAlignment="Top" Width="35" Height="35" Tag="1" Click="btnCtrl_Click"/>
+                <Button x:Name="btnUp" Content="↑" HorizontalAlignment="Left" Margin="101,199,0,0" VerticalAlignment="Top" Width="35" Height="35" Tag="2" Click="btnCtrl_Click"/>
+                <Button x:Name="btnRightUp" Content="↗" HorizontalAlignment="Left" Margin="146,199,0,0" VerticalAlignment="Top" Width="35" Height="35" Tag="3" Click="btnCtrl_Click"/>
+                <Button x:Name="btnLeft" Content="←" HorizontalAlignment="Left" Margin="56,244,0,0" VerticalAlignment="Top" Width="35" Height="35" Tag="4" Click="btnCtrl_Click"/>
+                <Button x:Name="btnSwith" Content="〇" HorizontalAlignment="Left" Margin="101,244,0,0" VerticalAlignment="Top" Width="35" Height="35" Click="btnSwith_Click"/>
+                <Button x:Name="btnRight" Content="→" HorizontalAlignment="Left" Margin="146,244,0,0" VerticalAlignment="Top" Width="35" Height="35" Tag="5" Click="btnCtrl_Click"/>
+                <Button x:Name="btnLeftDown" Content="↙" HorizontalAlignment="Left" Margin="56,289,0,0" VerticalAlignment="Top" Width="35" Height="35" Tag="6" Click="btnCtrl_Click"/>
+                <Button x:Name="btnDown" Content="↓" HorizontalAlignment="Left" Margin="101,289,0,0" VerticalAlignment="Top" Width="35" Height="35" Tag="7" Click="btnCtrl_Click"/>
+                <Button x:Name="btnRightDown" Content="↘" HorizontalAlignment="Left" Margin="146,289,0,0" VerticalAlignment="Top" Width="35" Height="35" Tag="8" Click="btnCtrl_Click"/>
             </Grid>
             <Canvas x:Name="cvsChess">
             </Canvas>
